@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purity Pursuit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Title Screen Overlay -->
+  <div id="title-screen">
+    <h1 id="title-screen-title">Purity Pursuit</h1>
+    <button id="start-btn">Start</button>
+    <button id="title-quit-btn" style="display:none">Quit Game</button>
+  </div>
+  <div id="game-container">
+    <header>
+      <h1>Purity Pursuit</h1>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem;">
+        <button id="reset-btn">Reset</button>
+        <button id="quit-btn">Quit Game</button>
+      </div>
+      <div id="status-bar">
+        <div>Level: <span id="level">1</span></div>
+        <div>Score: <span id="score">0</span></div>
+        <div id="goal-points">Goal: 50</div>
+        <div>Time: <span id="time">30</span>s</div>
+      </div>
+      <img src="images/Blog_Charity-Water editied.png" alt="Charity: Water" id="charity-logo">
+    </header>
+    <div id="game-area">
+      <img src="images/charity water bucket.png" alt="bucket" id="bucket">
+      <!-- Droplets are dynamically added by JavaScript -->
+    </div>
+  </div>
+  <!-- Success Screen Overlay -->
+  <div id="success-screen" style="display:none">
+    <div class="confetti-container" id="success-confetti"></div>
+    <h1 id="success-title">Great Job!</h1>
+    <button id="next-level-btn">Next Level</button>
+    <button id="success-reset-level-btn">Reset Level</button>
+    <button id="success-reset-game-btn">Reset Game</button>
+    <button id="success-quit-btn">Quit Game</button>
+  </div>
+  <!-- Failure Screen Overlay -->
+  <div id="fail-screen" style="display:none">
+    <h1 id="fail-title">Try Again</h1>
+    <button id="fail-reset-btn">Try Again</button>
+    <button id="fail-quit-btn">Quit Game</button>
+  </div>
+  <!-- Congratulations Screen Overlay -->
+  <div id="congrats-screen" style="display:none">
+    <div class="confetti-container" id="congrats-confetti"></div>
+    <h1 id="congrats-title">Congratulations! You won!</h1>
+    <button id="congrats-reset-level-btn">Reset Level</button>
+    <button id="congrats-reset-game-btn">Reset Game</button>
+    <button id="congrats-quit-btn">Quit Game</button>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
