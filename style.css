@@ -343,17 +343,30 @@ header h1 {
   border-color: #7fd3ff;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  #difficulty-select {
-    font-size: 1rem;
-    padding: 0.5rem 1.2rem;
-  }
+/* Import Google Fonts substitutes */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Georgia&display=swap');
+
+/* FF Meta Serif substitute for main titles */
+#title-screen-title,
+header h1,
+#success-title,
+#fail-title,
+#congrats-title {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
 }
-@media (max-width: 600px) {
-  #difficulty-select {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.8rem;
-  }
+
+/* Classic serif for all other text */
+body,
+button,
+#status-bar,
+#goal-points,
+#level,
+#score,
+#time,
+#success-screen button,
+#fail-screen button,
+#congrats-screen button,
+#difficulty-select {
+  font-family: 'Georgia', serif;
 }
