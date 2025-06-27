@@ -43,6 +43,11 @@ let levelGoals = [50, 75, 100];
 // Add difficulty dropdown
 const difficultySelect = document.getElementById("difficulty-select");
 
+// --- GOAL message elements ---
+const goalMessage = document.getElementById("goal-message");
+const goalConfetti = document.getElementById("goal-confetti");
+let goalShown = false;
+
 let difficulty = "easy"; // default
 let dropSpeeds = {
   easy: 4,
@@ -115,29 +120,43 @@ function spawnDroplet() {
 }
 
 function checkGoal() {
-  // No longer ends the game immediately when reaching the goal
+  if (!goalShown && score >= goalPoints) {
+    showGoalMessage();
+  }
 }
 
 function setGoalForLevel() {
   goalPoints = levelGoals[level - 1] + goalOffsets[difficulty];
   goalPointsDisplay.textContent = `Goal: ${goalPoints}`;
+  goalShown = false;
 }
 
-function showConfetti(containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.innerHTML = '';
+function showGoalMessage() {
+  if (!goalMessage || goalShown) return;
+  goalShown = true;
+  goalMessage.textContent = "GOAL!!!";
+  goalMessage.style.display = "block";
+  showGoalConfetti();
+  setTimeout(() => {
+    goalMessage.style.display = "none";
+    if (goalConfetti) goalConfetti.innerHTML = '';
+  }, 1500);
+}
+
+function showGoalConfetti() {
+  if (!goalConfetti) return;
+  goalConfetti.innerHTML = '';
   const colors = ['#3fa9f5', '#7fd3ff', '#f9d423', '#f36f6f', '#2ecc71', '#f7b731'];
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 30; i++) {
     const confetti = document.createElement('div');
     confetti.className = 'confetti';
     confetti.style.left = Math.random() * 90 + 5 + '%';
     confetti.style.top = (Math.random() * 10 + 5) + '%';
     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
     confetti.style.animationDelay = (Math.random() * 0.5) + 's';
-    container.appendChild(confetti);
+    goalConfetti.appendChild(confetti);
   }
-  setTimeout(() => { container.innerHTML = ''; }, 1800);
+  setTimeout(() => { if (goalConfetti) goalConfetti.innerHTML = ''; }, 1800);
 }
 
 function updateTime() {
@@ -200,6 +219,9 @@ function resetGame() {
   if (successScreen) successScreen.style.display = "none";
   if (failScreen) failScreen.style.display = "none";
   if (congratsScreen) congratsScreen.style.display = "none";
+  // Hide goal message and confetti
+  if (goalMessage) goalMessage.style.display = "none";
+  if (goalConfetti) goalConfetti.innerHTML = '';
   // Reset game state
   score = 0;
   time = 30;
@@ -237,6 +259,23 @@ function quitToTitle() {
   // Stop intervals
   clearInterval(gameInterval);
   clearInterval(dropletInterval);
+}
+
+function showConfetti(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  const colors = ['#3fa9f5', '#7fd3ff', '#f9d423', '#f36f6f', '#2ecc71', '#f7b731'];
+  for (let i = 0; i < 40; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 90 + 5 + '%';
+    confetti.style.top = (Math.random() * 10 + 5) + '%';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+    container.appendChild(confetti);
+  }
+  setTimeout(() => { container.innerHTML = ''; }, 1800);
 }
 
 window.addEventListener("mousemove", moveBucket);

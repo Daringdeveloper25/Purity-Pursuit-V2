@@ -402,3 +402,48 @@ button,
 #difficulty-select {
   font-family: 'Georgia', serif;
 }
+
+#goal-message {
+  display: none;
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  font-size: min(2.5rem, 8vw);
+  color: #2c3e50;
+  text-align: center;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  letter-spacing: 0.08em;
+  z-index: 10;
+  position: relative;
+  filter: drop-shadow(0 2px 8px #7fd3ff88);
+  pointer-events: none;
+  user-select: none;
+  animation: goal-pop 1.2s cubic-bezier(.25,1.7,.5,1.2);
+}
+
+@keyframes goal-pop {
+  0% { transform: scale(0.7); opacity: 0.2; }
+  40% { transform: scale(1.15); opacity: 1; }
+  70% { transform: scale(1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#goal-message-container {
+  min-height: 2.5em;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+#goal-confetti.confetti-container {
+  pointer-events: none;
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  overflow: visible;
+}
