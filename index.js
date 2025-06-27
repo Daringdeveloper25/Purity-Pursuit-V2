@@ -38,8 +38,8 @@ let gameInterval;
 let dropletInterval;
 let goalPoints = 50;
 
-// For testing: set all level goals to 0 and time to 2 seconds
-let levelGoals = [0, 0, 0];
+// Restore original level goals
+let levelGoals = [50, 75, 100];
 
 // Track scores for each level
 let levelScores = [0, 0, 0];
@@ -227,7 +227,7 @@ function startGame() {
   if (congratsScreen) congratsScreen.style.display = "none";
   // Reset game state
   score = 0;
-  time = 2; // For testing: set time to 2 seconds
+  time = 30; // Restore original time
   scoreDisplay.textContent = score;
   levelDisplay.textContent = level;
   timeDisplay.textContent = time;
@@ -268,7 +268,7 @@ function resetGame() {
   if (goalConfetti) goalConfetti.innerHTML = '';
   // Reset game state
   score = 0;
-  time = 2; // For testing: set time to 2 seconds
+  time = 30; // Restore original time
   scoreDisplay.textContent = score;
   levelDisplay.textContent = level;
   timeDisplay.textContent = time;
@@ -296,7 +296,7 @@ function quitToTitle() {
   // Reset game state
   score = 0;
   level = 1;
-  time = 2; // For testing: set time to 2 seconds
+  time = 30; // Restore original time
   scoreDisplay.textContent = score;
   levelDisplay.textContent = level;
   timeDisplay.textContent = time;
