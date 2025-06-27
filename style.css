@@ -343,6 +343,38 @@ header h1 {
   border-color: #7fd3ff;
 }
 
+/* Footer styles */
+footer {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: transparent;
+  padding: 0.2rem 0 0.2rem 0;
+  z-index: 2001;
+  box-shadow: none;
+}
+
+/* Charity Water link styles */
+.charity-link {
+  display: inline-block; /* Only wrap the text, not the full width */
+  text-decoration: none;
+  color: #264b7a;
+  transition: color 0.2s;
+  font-size: 0.95rem;
+}
+
+.charity-link h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.charity-link:hover, .charity-link:focus {
+  color: #5ec6fa; /* Light blue on hover */
+}
+
 /* Import Google Fonts substitutes */
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Georgia&display=swap');
 
