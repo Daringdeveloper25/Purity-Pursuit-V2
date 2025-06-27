@@ -38,7 +38,11 @@ let gameInterval;
 let dropletInterval;
 let goalPoints = 50;
 
-let levelGoals = [50, 75, 100];
+// For testing: set all level goals to 0 and time to 2 seconds
+let levelGoals = [0, 0, 0];
+
+// Track scores for each level
+let levelScores = [0, 0, 0];
 
 // Add difficulty dropdown
 const difficultySelect = document.getElementById("difficulty-select");
@@ -180,6 +184,10 @@ function updateTime() {
     clearInterval(gameInterval);
     clearInterval(dropletInterval);
     if (score >= goalPoints) {
+      // Save score for this level
+      if (level >= 1 && level <= 3) {
+        levelScores[level - 1] = score;
+      }
       if (level < 3) {
         if (successScreen) {
           successScreen.style.display = "flex";
@@ -189,11 +197,25 @@ function updateTime() {
         if (congratsScreen) {
           congratsScreen.style.display = "flex";
           showConfetti('congrats-confetti');
+          showCongratsLevelScores();
         }
       }
     } else {
       if (failScreen) failScreen.style.display = "flex";
     }
+  }
+}
+
+// Show level scores on congrats screen
+function showCongratsLevelScores() {
+  const scoresDiv = document.getElementById("congrats-level-scores");
+  if (!scoresDiv) return;
+  scoresDiv.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const row = document.createElement('div');
+    row.className = 'level-score-row';
+    row.textContent = `Level ${i + 1}: ${levelScores[i]} points`;
+    scoresDiv.appendChild(row);
   }
 }
 
@@ -205,7 +227,7 @@ function startGame() {
   if (congratsScreen) congratsScreen.style.display = "none";
   // Reset game state
   score = 0;
-  time = 30;
+  time = 2; // For testing: set time to 2 seconds
   scoreDisplay.textContent = score;
   levelDisplay.textContent = level;
   timeDisplay.textContent = time;
@@ -218,10 +240,18 @@ function startGame() {
   clearInterval(dropletInterval);
   gameInterval = setInterval(updateTime, 1000);
   dropletInterval = setInterval(spawnDroplet, 800);
+  // Only reset scores if starting a new game (level 1)
+  if (level === 1) {
+    levelScores = [0, 0, 0];
+  }
 }
 
 function nextLevel() {
   if (level < 3) {
+    // Save score for this level before advancing
+    if (level >= 1 && level <= 3) {
+      levelScores[level - 1] = score;
+    }
     level++;
     startGame();
   }
@@ -238,7 +268,7 @@ function resetGame() {
   if (goalConfetti) goalConfetti.innerHTML = '';
   // Reset game state
   score = 0;
-  time = 30;
+  time = 2; // For testing: set time to 2 seconds
   scoreDisplay.textContent = score;
   levelDisplay.textContent = level;
   timeDisplay.textContent = time;
@@ -251,6 +281,10 @@ function resetGame() {
   clearInterval(dropletInterval);
   gameInterval = setInterval(updateTime, 1000);
   dropletInterval = setInterval(spawnDroplet, 800);
+  // Only reset scores if starting from level 1
+  if (level === 1) {
+    levelScores = [0, 0, 0];
+  }
 }
 
 function quitToTitle() {
@@ -262,7 +296,7 @@ function quitToTitle() {
   // Reset game state
   score = 0;
   level = 1;
-  time = 30;
+  time = 2; // For testing: set time to 2 seconds
   scoreDisplay.textContent = score;
   levelDisplay.textContent = level;
   timeDisplay.textContent = time;
@@ -273,6 +307,7 @@ function quitToTitle() {
   // Stop intervals
   clearInterval(gameInterval);
   clearInterval(dropletInterval);
+  levelScores = [0, 0, 0];
 }
 
 function showConfetti(containerId) {
