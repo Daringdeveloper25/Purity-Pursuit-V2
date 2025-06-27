@@ -56,20 +56,29 @@ let goalShown = false;
 const dropletSound = new Audio('sounds/droplet.mp3'); // Clean droplet
 const dirtySound = new Audio('sounds/dirty droplet.mp3'); // Dirty droplet
 
-// Unlock audio on first user interaction (mobile compatibility)
+// iOS/Mobile audio unlock workaround
+let audioUnlocked = false;
 function unlockAudio() {
+  if (audioUnlocked) return;
   [dropletSound, dirtySound].forEach(sound => {
-    if (sound && sound.paused) {
-      sound.play().catch(() => {}); // Try to play and immediately pause to unlock
-      sound.pause();
-      sound.currentTime = 0;
-    }
+    try {
+      // Create a short silent buffer and play it to unlock
+      sound.volume = 0;
+      sound.play().then(() => {
+        sound.pause();
+        sound.currentTime = 0;
+        sound.volume = 1;
+      }).catch(() => {});
+    } catch (e) {}
   });
+  audioUnlocked = true;
   window.removeEventListener("touchstart", unlockAudio, true);
   window.removeEventListener("mousedown", unlockAudio, true);
+  window.removeEventListener("click", unlockAudio, true);
 }
 window.addEventListener("touchstart", unlockAudio, true);
 window.addEventListener("mousedown", unlockAudio, true);
+window.addEventListener("click", unlockAudio, true);
 
 let difficulty = "easy"; // default
 let dropSpeeds = {
@@ -131,6 +140,7 @@ function spawnDroplet() {
         // Play water droplet sound
         if (dropletSound) {
           dropletSound.currentTime = 0;
+          dropletSound.volume = 1;
           dropletSound.play().catch(() => {});
         }
       } else {
@@ -138,6 +148,7 @@ function spawnDroplet() {
         // Play dirty droplet sound
         if (dirtySound) {
           dirtySound.currentTime = 0;
+          dirtySound.volume = 1;
           dirtySound.play().catch(() => {});
         }
       }
