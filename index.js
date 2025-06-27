@@ -48,6 +48,10 @@ const goalMessage = document.getElementById("goal-message");
 const goalConfetti = document.getElementById("goal-confetti");
 let goalShown = false;
 
+// --- Water droplet sounds ---
+const dropletSound = new Audio('sounds/droplet.mp3'); // Clean droplet
+const dirtySound = new Audio('sounds/dirty droplet.mp3');     // Dirty droplet
+
 let difficulty = "easy"; // default
 let dropSpeeds = {
   easy: 4,
@@ -105,8 +109,18 @@ function spawnDroplet() {
     ) {
       if (droplet.classList.contains("clean")) {
         score += 10;
+        // Play water droplet sound
+        if (dropletSound) {
+          dropletSound.currentTime = 0;
+          dropletSound.play();
+        }
       } else {
         score -= 5;
+        // Play dirty droplet sound
+        if (dirtySound) {
+          dirtySound.currentTime = 0;
+          dirtySound.play();
+        }
       }
       scoreDisplay.textContent = score;
       checkGoal();
