@@ -40,6 +40,25 @@ let goalPoints = 50;
 
 let levelGoals = [50, 75, 100];
 
+// Add difficulty dropdown
+const difficultySelect = document.getElementById("difficulty-select");
+
+let difficulty = "easy"; // default
+let dropSpeeds = {
+  easy: 4,
+  medium: 6,
+  hard: 8
+};
+let goalOffsets = {
+  easy: 0,
+  medium: 10,
+  hard: 25
+};
+
+function getCurrentDropSpeed() {
+  return dropSpeeds[difficulty] + level - 1;
+}
+
 function moveBucket(e) {
   const areaWidth = gameArea.clientWidth;
   const bucketWidth = bucket.offsetWidth;
@@ -68,7 +87,7 @@ function spawnDroplet() {
 
   let y = -30;
   const fall = setInterval(() => {
-    y += 4 + level;
+    y += getCurrentDropSpeed();
     droplet.style.top = `${y}px`;
 
     const dropletRect = droplet.getBoundingClientRect();
@@ -100,7 +119,7 @@ function checkGoal() {
 }
 
 function setGoalForLevel() {
-  goalPoints = levelGoals[level - 1];
+  goalPoints = levelGoals[level - 1] + goalOffsets[difficulty];
   goalPointsDisplay.textContent = `Goal: ${goalPoints}`;
 }
 
@@ -285,4 +304,14 @@ if (congratsResetGameBtn) {
 }
 if (congratsQuitBtn) {
   congratsQuitBtn.onclick = quitToTitle;
+}
+if (difficultySelect) {
+  difficultySelect.addEventListener("change", (e) => {
+    difficulty = e.target.value;
+  });
+}
+
+// Set dropdown to current value on load
+if (difficultySelect) {
+  difficultySelect.value = difficulty;
 }

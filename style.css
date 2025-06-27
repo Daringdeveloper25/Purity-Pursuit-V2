@@ -323,3 +323,37 @@ header h1 {
     min-height: 120px;
   }
 }
+
+#difficulty-select {
+  display: block;
+  margin: 0.5rem auto 1.5rem auto;
+  padding: 0.7rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 1.2rem;
+  border: 1px solid #3fa9f5;
+  background: #fff;
+  color: #2c3e50;
+  max-width: 90vw;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+  outline: none;
+  text-align: center;
+}
+
+#difficulty-select:focus {
+  border-color: #7fd3ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  #difficulty-select {
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
+  }
+}
+@media (max-width: 600px) {
+  #difficulty-select {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.8rem;
+  }
+}
